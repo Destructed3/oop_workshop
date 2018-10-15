@@ -22,7 +22,7 @@ class Player {
     public function get_number() {
         echo "Bitte gib eine Zahl von 1-100 ein!\n";
         
-        $line = $this->get_input();
+        $line = readline();
         if(is_numeric($line)) {
             $p_num = intval($line);
             if($p_num <= 100 && $p_num > 0) {
@@ -30,13 +30,6 @@ class Player {
             }
         }
         return $this->get_number();
-    }
-
-    public function get_input() {
-        $handle = fopen("php://stdin", "r");
-        $answer = trim(fgets($handle));
-        fclose($handle);
-        return $answer;
     }
 }
 
@@ -89,7 +82,7 @@ class Game {
 
     private function afterword() {
         echo "Möchtest du noch einmal spielen? (yes/no)\n";
-        $answer = $this->player->get_input();
+        $answer = readline();
         echo "\n";
         if($answer == "yes" || $answer == "y") {
             $this->start_game();
