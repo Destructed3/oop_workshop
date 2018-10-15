@@ -49,19 +49,19 @@ class Game {
 
         $this->explain_rules();
         $this->game_loop();
-        $this->afterword();
     }
 
     private function game_loop() {
         $p_num = $this->player->get_number();
-        $return = $this->number->compare_number($p_num);
-        switch($return) {
+        $compared_num = $this->number->compare_number($p_num);
+        switch($compared_num) {
             case 1: 
                 echo "\nMit $p_num hast du zu hoch geraten!\n\n";
                 $this->game_loop();
                 break;
             case 0:
                 echo "\nDu hast gewonnen!\n\n";
+                $this->afterword();
                 break;
             case -1:
                 echo "\nMit $p_num hast du zu tief geraten!\n\n";
