@@ -1,13 +1,14 @@
 <?php
 
 class Number {
-    private $number;
+    protected $number;
     
     public function gen_number() {
         $this->number = rand(1,100);
     }
 
     public function compare_number(int $num) {
+        echo "Comparing $num vs $this->number";
         if($this->number < $num) {
             return 1;
         } else if($this->number > $num) {
@@ -34,13 +35,13 @@ class Player {
 }
 
 class Game {
-    private $number;
-    private $player;
-    private $guesses;
+    protected $number;
+    protected $player;
+    protected $guesses;
 
-    public function __construct() {
-        $this->number = new Number();
-        $this->player = new Player();
+    public function __construct(Number $number, Player $player) {
+        $this->number = $number;
+        $this->player = $player;
 
         $this->start_game();
     }
@@ -53,7 +54,7 @@ class Game {
         $this->game_loop();
     }
 
-    private function game_loop() {
+    protected function game_loop() {
         $this->guesses++;
         $p_num = $this->player->get_number();
         $compared_num = $this->number->compare_number($p_num);
@@ -73,7 +74,7 @@ class Game {
         }
     }
 
-    private function explain_rules() {
+    protected function explain_rules() {
         echo "Willkommen zum Zahlenrat-Spiel!\n";
         echo "\n";
         echo "Der Computer generiert eine Zahl zwischen 1 und 100.\n";
@@ -83,7 +84,7 @@ class Game {
         echo "\n";
     }
 
-    private function afterword() {
+    protected function afterword() {
         echo "UND: du hast $this->guesses mal für diesen Sieg geraten.\n\n";
         echo "Möchtest du noch einmal spielen? (yes/no)\n";
         $answer = readline();
@@ -96,4 +97,10 @@ class Game {
     }
 }
 
-new Game();
+class Test extends Number {
+    public function gen_number() {
+        $this->number = 93;
+    }
+}
+
+new Game(new Test(), new Player());
