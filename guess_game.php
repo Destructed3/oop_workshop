@@ -36,6 +36,7 @@ class Player {
 class Game {
     private $number;
     private $player;
+    private $guesses;
 
     public function __construct() {
         $this->number = new Number();
@@ -46,12 +47,14 @@ class Game {
 
     public function start_game() {
         $this->number->gen_number();
+        $this->guesses = 0;
 
         $this->explain_rules();
         $this->game_loop();
     }
 
     private function game_loop() {
+        $this->guesses++;
         $p_num = $this->player->get_number();
         $compared_num = $this->number->compare_number($p_num);
         switch($compared_num) {
@@ -60,7 +63,7 @@ class Game {
                 $this->game_loop();
                 break;
             case 0:
-                echo "\nDu hast gewonnen!\n\n";
+                echo "\nDu hast gewonnen!\n";
                 $this->afterword();
                 break;
             case -1:
@@ -81,6 +84,7 @@ class Game {
     }
 
     private function afterword() {
+        echo "UND: du hast $this->guesses mal für diesen Sieg geraten.\n\n";
         echo "Möchtest du noch einmal spielen? (yes/no)\n";
         $answer = readline();
         echo "\n";
